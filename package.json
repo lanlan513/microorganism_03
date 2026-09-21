@@ -9,6 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "check": "tsc --noEmit",
+    "acceptance": "node scripts/acceptance.mjs",
+    "acceptance:http": "tsx scripts/e2e-http.mjs",
     "server:dev": "nodemon",
     "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\""
   },
