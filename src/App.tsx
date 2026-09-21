@@ -1,28 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { ParticleBackground } from './components/ParticleBackground';
-import { HomePage } from './pages/HomePage';
-import { CategoryPage } from './pages/CategoryPage';
-import { DetailPage } from './pages/DetailPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+import { useEffect } from 'react';
+import { GamePage } from './components/GamePage';
+import { useGameStore } from './store/useGameStore';
 
 export default function App() {
-  return (
-    <Router>
-      <div className="relative min-h-screen flex flex-col">
-        <ParticleBackground />
-        <Navbar />
-        <main className="relative z-10 flex-1">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/category/:category" element={<CategoryPage />} />
-            <Route path="/microbe/:id" element={<DetailPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
-  );
+  const init = useGameStore((state) => state.init);
+  const clearNotice = useGameStore((state) => state.clearNotice);
+
+  useEffect(() => {
+    init().catch((error) => console.error('文明馆初始化失败', error));
+  }, [init]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(clearNotice, 6000);
+    return () => window.clearTimeout(timer);
+  }, [clearNotice]);
+
+  return <GamePage />;
 }

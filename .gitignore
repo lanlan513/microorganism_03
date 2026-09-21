@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vite
+.game-data-acceptance
+api/data
+data
